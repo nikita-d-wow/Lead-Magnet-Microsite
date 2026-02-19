@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ClipboardCheck } from 'lucide-react';
+import { ClipboardCheck, Target } from 'lucide-react';
 import { Section } from '../auditData';
 import QuestionCard from './QuestionCard';
 
@@ -74,7 +74,7 @@ const AuditSection: React.FC<AuditSectionProps> = ({ section, scores, onScoreCha
                                 </div>
                             </div>
                             <div className="audit-score-display">
-                                <span className="audit-score-label">👉 Section Score</span>
+                                <span className="audit-score-label"><Target size={16} color="var(--accent-gold)" /> Section Score</span>
                                 <span className="audit-score-value">
                                     {sectionTotal}
                                     <span className="audit-score-max">/ {maxScore}</span>

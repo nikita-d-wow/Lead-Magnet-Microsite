@@ -3,10 +3,9 @@ import { motion } from 'framer-motion';
 interface ProgressTrackerProps {
     answeredCount: number;
     totalQuestions: number;
-    totalScore: number;
 }
 
-const ProgressTracker: React.FC<ProgressTrackerProps> = ({ answeredCount, totalQuestions, totalScore }) => {
+const ProgressTracker: React.FC<ProgressTrackerProps> = ({ answeredCount, totalQuestions }) => {
     const progressPercent = (answeredCount / totalQuestions) * 100;
 
     return (
@@ -30,9 +29,8 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({ answeredCount, totalQ
                         <span className="current">{answeredCount}</span>
                         <span className="total">/{totalQuestions}</span>
                     </div>
-                    <div className="progress-circle-score">
-                        <span className="label">Score</span>
-                        <span className="value">{totalScore}</span>
+                    <div className="progress-circle-label">
+                        Answered
                     </div>
                 </div>
             </motion.div>
