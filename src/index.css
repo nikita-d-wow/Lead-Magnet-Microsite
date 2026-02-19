@@ -34,6 +34,10 @@ html {
   scroll-behavior: smooth;
 }
 
+.app-wrapper {
+  padding-top: 100px;
+}
+
 h1, h2, h3 {
   font-family: var(--font-serif);
   letter-spacing: -0.02em;

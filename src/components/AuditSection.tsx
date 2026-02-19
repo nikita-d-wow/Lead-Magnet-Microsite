@@ -31,6 +31,7 @@ const AuditSection: React.FC<AuditSectionProps> = ({ section, scores, onScoreCha
                             <ClipboardCheck size={28} />
                         </div>
                         <div>
+                            <p className="audit-section-eyebrow">Section {section.sectionNumber}</p>
                             <h2 className="audit-section-title">{section.title}</h2>
                             <p className="audit-section-subtitle">{section.subtitle}</p>
                         </div>

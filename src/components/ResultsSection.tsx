@@ -5,6 +5,7 @@ import { classifications } from '../auditData';
 interface Classification {
     label: string;
     description: string;
+    bullets: string[];
     riskLevel: string;
     leakage: string;
     leakageLabel: string;
@@ -34,7 +35,7 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ totalScore, maturity, s
                         initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                        style={{ padding: '6rem 0 4rem' }}
+                        style={{ padding:'6rem 0 4rem' }}
                     >
                         <div className="premium-container">
                             <div
@@ -83,12 +84,39 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ totalScore, maturity, s
                                             fontSize: '1.2rem',
                                             color: 'var(--text-secondary)',
                                             maxWidth: '700px',
-                                            margin: '0 auto 2rem',
+                                            margin: '0 auto 1rem',
                                             lineHeight: 1.7,
                                         }}
                                     >
                                         {maturity.description}
                                     </p>
+                                    <ul
+                                        style={{
+                                            listStyle: 'none',
+                                            padding: 0,
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            gap: '0.5rem',
+                                            alignItems: 'center',
+                                            marginBottom: '0',
+                                        }}
+                                    >
+                                        {maturity.bullets.map((bullet, i) => (
+                                            <li
+                                                key={i}
+                                                style={{
+                                                    fontSize: '1.05rem',
+                                                    color: 'var(--text-secondary)',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '0.5rem',
+                                                }}
+                                            >
+                                                <CheckCircle color="var(--accent-gold)" size={16} />
+                                                {bullet}
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
 
                                 {/* Maturity Scale Visual */}
