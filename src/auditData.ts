@@ -5,6 +5,7 @@ export interface Question {
 
 export interface Section {
   id: string;
+  sectionNumber: number;
   title: string;
   subtitle: string;
   measures: string;
@@ -14,6 +15,7 @@ export interface Section {
 export const auditData: Section[] = [
   {
     id: 'governance',
+    sectionNumber: 1,
     title: 'Governance Layer Assessment',
     subtitle: 'Governance & Oversight',
     measures: 'Board visibility. Strategic alignment. Risk control.',
@@ -27,6 +29,7 @@ export const auditData: Section[] = [
   },
   {
     id: 'adoption',
+    sectionNumber: 2,
     title: 'Adoption & Engagement Score',
     subtitle: 'Internal & Tenant Digital Adoption',
     measures: 'Execution strength. Behavioural adoption. Change management.',
@@ -40,6 +43,7 @@ export const auditData: Section[] = [
   },
   {
     id: 'collection',
+    sectionNumber: 3,
     title: 'Collection Cycle Efficiency Score',
     subtitle: 'Revenue & Cash Flow Digitization',
     measures: 'Cash flow velocity. Revenue leakage. Financial visibility.',
@@ -53,6 +57,7 @@ export const auditData: Section[] = [
   },
   {
     id: 'integration',
+    sectionNumber: 4,
     title: 'Data Sync & Integration Health Check',
     subtitle: 'System Architecture & Data Integrity',
     measures: 'Operational efficiency. Architecture maturity. Scalability.',
@@ -66,6 +71,7 @@ export const auditData: Section[] = [
   },
   {
     id: 'compliance',
+    sectionNumber: 5,
     title: 'Compliance & Risk Readiness Index',
     subtitle: 'Risk, Audit, and Regulatory Controls',
     measures: 'Institutional readiness. Audit defense. Portfolio resilience.',
@@ -84,6 +90,12 @@ export const classifications = [
     min: 0,
     max: 40,
     label: 'FRAGMENTED',
+    bullets: [
+      'Siloed systems',
+      'Manual collections',
+      'High compliance risk',
+      'Limited board visibility',
+    ],
     description: 'Siloed systems. Manual collections. High compliance risk. Limited board visibility.',
     riskLevel: 'Severe',
     leakage: 'High',
@@ -93,6 +105,11 @@ export const classifications = [
     min: 41,
     max: 65,
     label: 'OPERATIONAL',
+    bullets: [
+      'Basic systems in place',
+      'Partial automation',
+      'Limited integration',
+    ],
     description: 'Basic systems in place. Partial automation. Limited integration.',
     riskLevel: 'Moderate',
     leakage: 'High',
@@ -102,6 +119,11 @@ export const classifications = [
     min: 66,
     max: 85,
     label: 'STRUCTURED',
+    bullets: [
+      'Defined processes',
+      'Strong collection systems',
+      'Partial integration',
+    ],
     description: 'Defined processes. Strong collection systems. Partial integration.',
     riskLevel: 'Managed',
     leakage: 'Improving',
@@ -111,6 +133,11 @@ export const classifications = [
     min: 86,
     max: 105,
     label: 'STANDARDISED',
+    bullets: [
+      'Integrated systems',
+      'Reliable governance',
+      'Real-time reporting',
+    ],
     description: 'Integrated systems. Reliable governance. Real-time reporting.',
     riskLevel: 'Low',
     leakage: 'Scalable Infrastructure',
@@ -120,7 +147,13 @@ export const classifications = [
     min: 106,
     max: 125,
     label: 'INSTITUTIONAL-GRADE',
-    description: 'Fully integrated architecture. Automated revenue systems. Real-time portfolio visibility. Board-ready governance. You are operating at private equity or REIT standard.',
+    bullets: [
+      'Fully integrated architecture',
+      'Automated revenue systems',
+      'Real-time portfolio visibility',
+      'Board-ready governance',
+    ],
+    description: 'You are operating at private equity or REIT standard.',
     riskLevel: 'REIT Standard',
     leakage: 'Institutional Excellence',
     leakageLabel: 'Portfolio Status',
