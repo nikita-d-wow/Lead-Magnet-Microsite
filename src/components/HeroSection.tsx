@@ -9,7 +9,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onStartAudit }) => {
     return (
         <section
             style={{
-                height: '100vh',
+                height: '85vh',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

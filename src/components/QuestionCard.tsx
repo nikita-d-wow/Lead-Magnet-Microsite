@@ -26,14 +26,17 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, score, onScoreCha
             </div>
             <div className="score-options">
                 {[1, 2, 3, 4, 5].map((s) => (
-                    <button
+                    <motion.button
                         key={s}
                         className={`score-btn ${score === s ? 'active' : ''}`}
                         onClick={() => onScoreChange(s)}
                         title={scoreLabels[s - 1]}
+                        whileHover={{ scale: 1.12 }}
+                        whileTap={{ scale: 0.92 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                     >
                         <span className="score-btn-number">{s}</span>
-                    </button>
+                    </motion.button>
                 ))}
             </div>
         </motion.div>
