@@ -7,7 +7,9 @@ import WhyThisMatters from './components/WhyThisMatters';
 import HowItWorks from './components/HowItWorks';
 import AuditSection from './components/AuditSection';
 import ResultsSection from './components/ResultsSection';
+import LeadCapture from './components/LeadCapture';
 import Footer from './components/Footer';
+import ExecutiveReviewCTA from './components/ExecutiveReviewCTA';
 
 const TOTAL_QUESTIONS = 25;
 
@@ -15,8 +17,12 @@ function App() {
   const [scores, setScores] = useState<Record<string, number>>({});
   const [showResults, setShowResults] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const [isLeadCaptured, setIsLeadCaptured] = useState(false);
+  const [userData, setUserData] = useState({ name: '', email: '' });
+
   const resultsRef = useRef<HTMLDivElement>(null);
   const auditRef = useRef<HTMLDivElement>(null);
+  const leadCaptureRef = useRef<HTMLDivElement>(null);
 
   const handleScoreChange = (questionId: string, score: number) => {
     setScores(prev => ({ ...prev, [questionId]: score }));
@@ -47,7 +53,32 @@ function App() {
   }, [scores]);
 
   const startAudit = () => {
-    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+    if (!isLeadCaptured) {
+      const leadElement = document.getElementById('lead-capture');
+      if (leadElement) {
+        leadElement.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        // Fallback if ref hasn't rendered yet
+        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+      }
+    } else {
+      auditRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleLeadCapture = (name: string, email: string) => {
+    setUserData({ name, email });
+    setIsLeadCaptured(true);
+    // Log for verification in the browser console
+    console.log(`Lead captured: ${name} <${email}>`);
+    setTimeout(() => {
+      const auditElement = document.getElementById('audit-start');
+      if (auditElement) {
+        auditElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        auditRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   const allAnswered = answeredCount === TOTAL_QUESTIONS;
@@ -67,48 +98,62 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header onStartAudit={startAudit} />
       <div className="app-wrapper">
         <HeroSection onStartAudit={startAudit} />
         <WhyThisMatters />
         <HowItWorks />
 
-        <div ref={auditRef}>
-          {auditData.map((section) => (
-            <AuditSection
-              key={section.id}
-              section={section}
-              scores={scores}
-              onScoreChange={handleScoreChange}
-            />
-          ))}
-        </div>
+        {!isLeadCaptured && (
+          <div ref={leadCaptureRef}>
+            <LeadCapture onCapture={handleLeadCapture} />
+          </div>
+        )}
 
-        {/* Generate Score Button */}
-        <div className="generate-score-wrapper">
-          <button className="btn-primary generate-score-btn" onClick={handleGenerateScore}>
-            <Sparkles size={22} />
-            Generate My Score
-          </button>
-          {showWarning && (
-            <p className="generate-score-warning">
-              <AlertCircle size={14} />
-              Please answer all {TOTAL_QUESTIONS} questions to generate your score
-            </p>
-          )}
-          <p className="generate-score-hint">
-            {answeredCount} of {TOTAL_QUESTIONS} questions answered
-          </p>
-        </div>
+        {/* Assessment Section - Only visible after lead capture */}
+        {isLeadCaptured && (
+          <>
+            <div id="audit-start" ref={auditRef}>
+              {auditData.map((section) => (
+                <AuditSection
+                  key={section.id}
+                  section={section}
+                  scores={scores}
+                  onScoreChange={handleScoreChange}
+                />
+              ))}
+            </div>
 
-        <div ref={resultsRef}>
-          <ResultsSection
-            totalScore={totalScore}
-            maturity={maturity}
-            showResults={showResults}
-            sectionScores={sectionScores}
-          />
-        </div>
+            {/* Generate Score Button */}
+            <div className="generate-score-wrapper">
+              <button className="btn-primary generate-score-btn" onClick={handleGenerateScore}>
+                <Sparkles size={22} />
+                Generate My Score
+              </button>
+              {showWarning && (
+                <p className="generate-score-warning">
+                  <AlertCircle size={14} />
+                  Please answer all {TOTAL_QUESTIONS} questions to generate your score
+                </p>
+              )}
+              <p className="generate-score-hint">
+                {answeredCount} of {TOTAL_QUESTIONS} questions answered
+              </p>
+            </div>
+
+            <div ref={resultsRef}>
+              <ResultsSection
+                totalScore={totalScore}
+                maturity={maturity}
+                showResults={showResults}
+                sectionScores={sectionScores}
+                userData={userData}
+              />
+            </div>
+          </>
+        )}
+
+        <ExecutiveReviewCTA />
         <Footer />
       </div>
     </>
