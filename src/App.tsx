@@ -66,50 +66,52 @@ function App() {
   };
 
   return (
-    <div className="app-wrapper">
+    <>
       <Header />
-      <HeroSection onStartAudit={startAudit} />
-      <WhyThisMatters />
-      <HowItWorks />
+      <div className="app-wrapper">
+        <HeroSection onStartAudit={startAudit} />
+        <WhyThisMatters />
+        <HowItWorks />
 
-      <div ref={auditRef}>
-        {auditData.map((section) => (
-          <AuditSection
-            key={section.id}
-            section={section}
-            scores={scores}
-            onScoreChange={handleScoreChange}
-          />
-        ))}
-      </div>
+        <div ref={auditRef}>
+          {auditData.map((section) => (
+            <AuditSection
+              key={section.id}
+              section={section}
+              scores={scores}
+              onScoreChange={handleScoreChange}
+            />
+          ))}
+        </div>
 
-      {/* Generate Score Button */}
-      <div className="generate-score-wrapper">
-        <button className="btn-primary generate-score-btn" onClick={handleGenerateScore}>
-          <Sparkles size={22} />
-          Generate My Score
-        </button>
-        {showWarning && (
-          <p className="generate-score-warning">
-            <AlertCircle size={14} />
-            Please answer all {TOTAL_QUESTIONS} questions to generate your score
+        {/* Generate Score Button */}
+        <div className="generate-score-wrapper">
+          <button className="btn-primary generate-score-btn" onClick={handleGenerateScore}>
+            <Sparkles size={22} />
+            Generate My Score
+          </button>
+          {showWarning && (
+            <p className="generate-score-warning">
+              <AlertCircle size={14} />
+              Please answer all {TOTAL_QUESTIONS} questions to generate your score
+            </p>
+          )}
+          <p className="generate-score-hint">
+            {answeredCount} of {TOTAL_QUESTIONS} questions answered
           </p>
-        )}
-        <p className="generate-score-hint">
-          {answeredCount} of {TOTAL_QUESTIONS} questions answered
-        </p>
-      </div>
+        </div>
 
-      <div ref={resultsRef}>
-        <ResultsSection
-          totalScore={totalScore}
-          maturity={maturity}
-          showResults={showResults}
-          sectionScores={sectionScores}
-        />
+        <div ref={resultsRef}>
+          <ResultsSection
+            totalScore={totalScore}
+            maturity={maturity}
+            showResults={showResults}
+            sectionScores={sectionScores}
+          />
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 }
 
