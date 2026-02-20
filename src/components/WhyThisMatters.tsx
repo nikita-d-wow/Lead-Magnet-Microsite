@@ -11,7 +11,7 @@ const painPoints = [
 
 const WhyThisMatters = () => {
     return (
-        <section className="why-section">
+        <section id="why-this-matters" className="why-section">
             <div className="premium-container">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}

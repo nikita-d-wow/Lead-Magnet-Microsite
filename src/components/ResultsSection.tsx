@@ -1,4 +1,4 @@
-import { ArrowRight, AlertCircle, CheckCircle } from 'lucide-react';
+import { AlertCircle, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { classifications } from '../auditData';
 
@@ -18,14 +18,24 @@ interface SectionScore {
     maxScore: number;
 }
 
+interface UserData {
+    name: string;
+    email: string;
+}
+
 interface ResultsSectionProps {
     totalScore: number;
     maturity: Classification;
     showResults: boolean;
     sectionScores: SectionScore[];
+    userData: UserData;
 }
 
-const ResultsSection: React.FC<ResultsSectionProps> = ({ totalScore, maturity, showResults, sectionScores }) => {
+const ResultsSection: React.FC<ResultsSectionProps> = ({ totalScore, maturity, showResults, sectionScores, userData }) => {
+    // Log for verification
+    if (showResults) {
+        console.log(`Generating results for ${userData.name} (${userData.email})`);
+    }
     return (
         <>
             {/* Score + Maturity + Section Breakdown — conditional */}
@@ -260,45 +270,6 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ totalScore, maturity, s
                 )}
             </AnimatePresence>
 
-            {/* CTA Section — always visible */}
-            <section style={{ padding: '4rem 0 8rem' }}>
-                <div className="premium-container">
-                    <div className="cta-box">
-                        <h4 className="gold-gradient-text" style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>
-                            Want a Confidential Executive Benchmark Review?
-                        </h4>
-                        <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem', fontSize: '1.1rem', maxWidth: '700px', margin: '0 auto 1rem' }}>
-                            WowRealty offers a complimentary:
-                        </p>
-                        <h5 style={{ fontSize: '1.5rem', color: 'var(--text-primary)', fontWeight: 700, marginBottom: '1.5rem' }}>Portfolio Digital Maturity Briefing</h5>
-                        <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '1.5rem' }}>Includes:</p>
-
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.25rem', marginBottom: '3rem', maxWidth: '900px', margin: '0 auto 3rem' }}>
-                            {[
-                                'Executive score interpretation',
-                                'Blind spot analysis',
-                                'Risk exposure mapping',
-                                '90-day digital stabilization roadmap',
-                            ].map((item, i) => (
-                                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.95rem', background: '#ffffff', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
-                                    <CheckCircle color="var(--accent-gold)" size={18} />
-                                    <span style={{ textAlign: 'left' }}>{item}</span>
-                                </div>
-                            ))}
-                        </div>
-
-                        <a
-                            href="https://calendly.com/shri_harsha/letstalk"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn-primary"
-                            style={{ textDecoration: 'none', padding: '1.25rem 3rem' }}
-                        >
-                            Book My Executive Review <ArrowRight size={20} />
-                        </a>
-                    </div>
-                </div>
-            </section>
         </>
     );
 };

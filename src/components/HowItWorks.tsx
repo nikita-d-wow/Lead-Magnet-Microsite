@@ -18,7 +18,7 @@ const scoringLegend = [
 
 const HowItWorks = () => {
     return (
-        <section className="how-section">
+        <section id="how-it-works" className="how-section">
             <div className="premium-container">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
