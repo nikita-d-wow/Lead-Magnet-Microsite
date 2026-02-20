@@ -2,10 +2,10 @@ import { motion } from 'framer-motion';
 import { CheckCircle, Layers, HelpCircle, SlidersHorizontal, Award } from 'lucide-react';
 
 const features = [
-    { icon: <Layers size={28} />, label: '5 Sections', desc: 'Comprehensive coverage' },
-    { icon: <HelpCircle size={28} />, label: '25 Questions', desc: 'Deep assessment' },
-    { icon: <SlidersHorizontal size={28} />, label: 'Self-scoring', desc: 'Rate 1 to 5' },
-    { icon: <Award size={28} />, label: 'Instant Result', desc: 'Maturity classification' },
+    { icon: <Layers size={28} />, label: '5 Sections' },
+    { icon: <HelpCircle size={28} />, label: '25 Questions' },
+    { icon: <SlidersHorizontal size={28} />, label: 'Self-scoring framework' },
+    { icon: <Award size={28} />, label: 'Instant maturity classification' },
 ];
 
 const scoringLegend = [
@@ -46,7 +46,6 @@ const HowItWorks = () => {
                         >
                             <div className="how-feature-icon">{item.icon}</div>
                             <h4 className="how-feature-label">{item.label}</h4>
-                            <p className="how-feature-desc">{item.desc}</p>
                         </motion.div>
                     ))}
                 </div>
