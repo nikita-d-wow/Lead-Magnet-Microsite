@@ -130,6 +130,12 @@ h3 {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.premium-header.menu-open {
+  background: #ffffff;
+  backdrop-filter: none;
 }
 
 .header-flex {
@@ -200,10 +206,11 @@ h3 {
   top: 100%;
   left: 0;
   width: 100%;
-  background: white;
+  background: #ffffff;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid var(--border-color);
+  z-index: 1300;
 }
 
 .mobile-nav-content {
@@ -214,12 +221,16 @@ h3 {
 }
 
 .mobile-nav-link {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--text-primary);
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  padding: 0.75rem 0;
+  display: block;
+  width: 100%;
+  cursor: pointer;
 }
 
 .mobile-audit-btn {
@@ -246,6 +257,10 @@ h3 {
 
   .mobile-menu-toggle {
     display: block;
+  }
+
+  .header-actions .btn-primary {
+    display: none;
   }
 
   .header-flex {
