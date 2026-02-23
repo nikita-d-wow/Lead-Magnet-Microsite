@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ClipboardCheck, Target } from 'lucide-react';
+import { ClipboardCheck, ShieldCheck } from 'lucide-react';
 import { Section } from '../auditData';
 import QuestionCard from './QuestionCard';
 
@@ -20,18 +20,20 @@ const AuditSection: React.FC<AuditSectionProps> = ({ section, scores, onScoreCha
         <section className="audit-section">
             <div className="premium-container">
                 <motion.div
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-100px' }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
                 >
                     {/* Section Header */}
-                    <div className="audit-section-header">
-                        <div className="audit-section-icon">
-                            <ClipboardCheck size={28} />
+                    <div className="audit-section-header" style={{ marginBottom: '2.5rem' }}>
+                        <div className="audit-section-icon" style={{ color: 'var(--accent-gold)' }}>
+                            <ClipboardCheck size={32} />
                         </div>
                         <div>
-                            <p className="audit-section-eyebrow">Section {section.sectionNumber}</p>
+                            <p className="audit-section-eyebrow" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                Section <span className="serif-number" style={{ fontSize: '1.4rem' }}>{section.sectionNumber}</span>
+                            </p>
                             <h2 className="audit-section-title">{section.title}</h2>
                             <p className="audit-section-subtitle">{section.subtitle}</p>
                         </div>
@@ -41,7 +43,7 @@ const AuditSection: React.FC<AuditSectionProps> = ({ section, scores, onScoreCha
                     <div className="audit-card">
                         {/* What This Measures */}
                         <div className="audit-measures">
-                            <span className="audit-measures-label">What This Measures</span>
+                            <div className="audit-measures-label">What This Measures:</div>
                             <p className="audit-measures-text">{section.measures}</p>
                         </div>
 
@@ -63,7 +65,7 @@ const AuditSection: React.FC<AuditSectionProps> = ({ section, scores, onScoreCha
                         <div className="audit-score-footer">
                             <div className="audit-progress-info">
                                 <span className="audit-answered">
-                                    {answeredCount} of {section.questions.length} answered
+                                    <span className="serif-number">{answeredCount}</span> of <span className="serif-number">{section.questions.length}</span> answered
                                 </span>
                                 <div className="audit-progress-bar">
                                     <motion.div
@@ -75,10 +77,10 @@ const AuditSection: React.FC<AuditSectionProps> = ({ section, scores, onScoreCha
                                 </div>
                             </div>
                             <div className="audit-score-display">
-                                <span className="audit-score-label"><Target size={16} color="var(--accent-gold)" /> Section Score</span>
+                                <span className="audit-score-label"><ShieldCheck size={18} color="var(--accent-gold)" /> Section Score</span>
                                 <span className="audit-score-value">
-                                    {sectionTotal}
-                                    <span className="audit-score-max">/ {maxScore}</span>
+                                    <span className="serif-number">{sectionTotal}</span>
+                                    <span className="audit-score-max">/ <span className="serif-number">{maxScore}</span></span>
                                 </span>
                             </div>
                         </div>

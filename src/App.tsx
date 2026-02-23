@@ -11,6 +11,8 @@ import LeadCapture from './components/LeadCapture';
 import Footer from './components/Footer';
 import ExecutiveReviewCTA from './components/ExecutiveReviewCTA';
 
+import { captureLead } from './services/api';
+
 const TOTAL_QUESTIONS = 25;
 
 function App() {
@@ -18,6 +20,7 @@ function App() {
   const [showResults, setShowResults] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [isLeadCaptured, setIsLeadCaptured] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [userData, setUserData] = useState({ name: '', email: '' });
 
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -66,19 +69,30 @@ function App() {
     }
   };
 
-  const handleLeadCapture = (name: string, email: string) => {
-    setUserData({ name, email });
-    setIsLeadCaptured(true);
-    // Log for verification in the browser console
-    console.log(`Lead captured: ${name} <${email}>`);
-    setTimeout(() => {
-      const auditElement = document.getElementById('audit-start');
-      if (auditElement) {
-        auditElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } else {
-        auditRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 100);
+  const handleLeadCapture = async (name: string, email: string) => {
+    setIsSubmitting(true);
+    try {
+      await captureLead(name, email);
+
+      setUserData({ name, email });
+      setIsLeadCaptured(true);
+
+      console.log(`Lead captured and stored: ${name} <${email}>`);
+
+      setTimeout(() => {
+        const auditElement = document.getElementById('audit-start');
+        if (auditElement) {
+          auditElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          auditRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    } catch (error) {
+      console.error('Failed to capture lead:', error);
+      alert('Failed to save your details. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const allAnswered = answeredCount === TOTAL_QUESTIONS;
@@ -106,7 +120,7 @@ function App() {
 
         {!isLeadCaptured && (
           <div ref={leadCaptureRef}>
-            <LeadCapture onCapture={handleLeadCapture} />
+            <LeadCapture onCapture={handleLeadCapture} isSubmitting={isSubmitting} />
           </div>
         )}
 

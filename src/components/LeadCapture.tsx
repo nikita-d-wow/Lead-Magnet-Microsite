@@ -4,9 +4,10 @@ import { User, Mail, Shield, CheckCircle } from 'lucide-react';
 
 interface LeadCaptureProps {
     onCapture: (name: string, email: string) => void;
+    isSubmitting?: boolean;
 }
 
-const LeadCapture: React.FC<LeadCaptureProps> = ({ onCapture }) => {
+const LeadCapture: React.FC<LeadCaptureProps> = ({ onCapture, isSubmitting }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
@@ -14,18 +15,33 @@ const LeadCapture: React.FC<LeadCaptureProps> = ({ onCapture }) => {
     const validate = () => {
         const newErrors: { name?: string; email?: string } = {};
         if (!name.trim()) newErrors.name = 'Name is required';
+
         if (!email.trim()) {
             newErrors.email = 'Email is required';
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            newErrors.email = 'Please enter a valid email address';
+        } else {
+            // Basic email format check
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                newErrors.email = 'Please enter a valid email address';
+            } else {
+                // Business email specific check
+                const personalDomains = [
+                    'gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com',
+                    'icloud.com', 'aol.com', 'live.com', 'msn.com'
+                ];
+                const domain = email.split('@')[1].toLowerCase();
+                if (personalDomains.includes(domain)) {
+                    newErrors.email = 'Please use a business email address (personal domains not accepted)';
+                }
+            }
         }
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (validate()) {
+        if (validate() && !isSubmitting) {
             onCapture(name, email);
         }
     };
@@ -41,12 +57,12 @@ const LeadCapture: React.FC<LeadCaptureProps> = ({ onCapture }) => {
                     className="lead-capture-card glass-card"
                 >
                     <div className="lead-capture-header">
-                        <div className="lead-capture-icon">
-                            <Shield size={32} color="var(--accent-gold)" />
+                        <div className="lead-capture-icon-box">
+                            <Shield size={28} color="var(--accent-gold)" />
                         </div>
-                        <h2 className="lead-capture-title gold-gradient-text">Unlock Your Digital Maturity Audit</h2>
+                        <h2 className="lead-capture-title gold-gradient-text">Unlock Professional Assessment</h2>
                         <p className="lead-capture-subtitle">
-                            Enter your credentials to access the professional real estate digital maturity framework and benchmark your portfolio.
+                            Enter your credentials to unlock the professional digital maturity framework.
                         </p>
                     </div>
 
@@ -62,6 +78,7 @@ const LeadCapture: React.FC<LeadCaptureProps> = ({ onCapture }) => {
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     className={errors.name ? 'input-error' : ''}
+                                    disabled={isSubmitting}
                                 />
                             </div>
                             {errors.name && <span className="form-error-message">{errors.name}</span>}
@@ -78,6 +95,7 @@ const LeadCapture: React.FC<LeadCaptureProps> = ({ onCapture }) => {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className={errors.email ? 'input-error' : ''}
+                                    disabled={isSubmitting}
                                 />
                             </div>
                             {errors.email && <span className="form-error-message">{errors.email}</span>}
@@ -85,17 +103,10 @@ const LeadCapture: React.FC<LeadCaptureProps> = ({ onCapture }) => {
 
                         <button
                             type="submit"
-                            className="btn-primary lead-capture-submit"
-                            style={{
-                                alignSelf: 'center',
-                                padding: '0.8rem 2.5rem',
-                                fontSize: '1rem',
-                                width: 'auto',
-                                minWidth: '200px',
-                                justifyContent: 'center'
-                            }}
+                            disabled={isSubmitting}
+                            className={`btn-primary lead-capture-submit ${isSubmitting ? 'submitting' : ''}`}
                         >
-                            Access Audit
+                            {isSubmitting ? 'Processing...' : 'Unlock Benchmark'}
                         </button>
 
                         <div className="lead-capture-privacy">
