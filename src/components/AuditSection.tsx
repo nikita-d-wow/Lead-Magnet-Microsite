@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ClipboardCheck } from 'lucide-react';
+import { ClipboardCheck, Award } from 'lucide-react';
 import { Section } from '../auditData';
 import QuestionCard from './QuestionCard';
 
@@ -77,8 +77,8 @@ const AuditSection: React.FC<AuditSectionProps> = ({ section, scores, onScoreCha
                                 </div>
                             </div>
                             <div className="audit-score-display">
-                                <span className="audit-score-label" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <span style={{ fontSize: '1.2rem', color: 'var(--accent-gold)' }}>👉</span> Section Score
+                                <span className="audit-score-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                    <Award size={18} color="var(--accent-gold)" /> Section Score
                                 </span>
                                 <span className="audit-score-value">
                                     <span className="serif-number">{sectionTotal}</span>
