@@ -21,7 +21,6 @@ function App() {
   const [showWarning, setShowWarning] = useState(false);
   const [isLeadCaptured, setIsLeadCaptured] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [userData, setUserData] = useState({ name: '', email: '' });
 
   const resultsRef = useRef<HTMLDivElement>(null);
   const auditRef = useRef<HTMLDivElement>(null);
@@ -74,10 +73,7 @@ function App() {
     try {
       await captureLead(name, email);
 
-      setUserData({ name, email });
       setIsLeadCaptured(true);
-
-      console.log(`Lead captured and stored: ${name} <${email}>`);
 
       setTimeout(() => {
         const auditElement = document.getElementById('audit-start');
@@ -88,7 +84,6 @@ function App() {
         }
       }, 100);
     } catch (error) {
-      console.error('Failed to capture lead:', error);
       alert('Failed to save your details. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -161,7 +156,6 @@ function App() {
                 maturity={maturity}
                 showResults={showResults}
                 sectionScores={sectionScores}
-                userData={userData}
               />
             </div>
           </>

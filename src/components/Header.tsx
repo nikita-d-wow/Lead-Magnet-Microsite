@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../assets/WR-logo-1.svg';
 import { Menu, X } from 'lucide-react';
 
@@ -19,18 +19,24 @@ const Header: React.FC<HeaderProps> = ({ onStartAudit }) => {
 
     const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         e.preventDefault();
-        const element = document.querySelector(href);
-        if (element) {
-            const headerOffset = 80;
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        setIsMenuOpen(false);
 
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
-            setIsMenuOpen(false);
-        }
+        // Delay scroll to allow menu close animation and DOM to settle
+        setTimeout(() => {
+            const targetId = href.replace('#', '');
+            const element = document.getElementById(targetId);
+
+            if (element) {
+                const headerOffset = 100;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }, 350);
     };
 
     return (
@@ -79,34 +85,42 @@ const Header: React.FC<HeaderProps> = ({ onStartAudit }) => {
             </div>
 
             {/* Mobile Navigation Menu */}
-            <motion.nav
-                className="mobile-nav"
-                initial={false}
-                animate={isMenuOpen ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
-            >
-                <div className="mobile-nav-content">
-                    {navItems.map((item) => (
-                        <a
-                            key={item.label}
-                            href={item.href}
-                            onClick={(e) => scrollToSection(e, item.href)}
-                            className="mobile-nav-link"
-                        >
-                            {item.label}
-                        </a>
-                    ))}
-                    <button
-                        onClick={() => {
-                            onStartAudit?.();
-                            setIsMenuOpen(false);
-                        }}
-                        className="btn-primary mobile-audit-btn"
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.nav
+                        className="mobile-nav"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
                     >
-                        Start Audit
-                    </button>
-                </div>
-            </motion.nav>
+                        <div className="mobile-nav-content">
+                            {navItems.map((item) => (
+                                <a
+                                    key={item.label}
+                                    href={item.href}
+                                    onClick={(e) => scrollToSection(e, item.href)}
+                                    className="mobile-nav-link"
+                                >
+                                    {item.label}
+                                </a>
+                            ))}
+                            <button
+                                onClick={() => {
+                                    setIsMenuOpen(false);
+                                    // Delay action to allow menu close animation to complete
+                                    setTimeout(() => {
+                                        onStartAudit?.();
+                                    }, 350);
+                                }}
+                                className="btn-primary mobile-audit-btn"
+                            >
+                                Start Audit
+                            </button>
+                        </div>
+                    </motion.nav>
+                )}
+            </AnimatePresence>
         </motion.header>
     );
 };

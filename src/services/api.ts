@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_BASE_URL || 'http://localhost:5000/api';
 
 export const captureLead = async (name: string, businessEmail: string) => {
     try {
@@ -17,7 +17,6 @@ export const captureLead = async (name: string, businessEmail: string) => {
 
         return await response.json();
     } catch (error) {
-        console.error('API Error:', error);
         throw error;
     }
 };

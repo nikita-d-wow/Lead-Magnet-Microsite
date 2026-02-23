@@ -18,24 +18,15 @@ interface SectionScore {
     maxScore: number;
 }
 
-interface UserData {
-    name: string;
-    email: string;
-}
 
 interface ResultsSectionProps {
     totalScore: number;
     maturity: Classification;
     showResults: boolean;
     sectionScores: SectionScore[];
-    userData: UserData;
 }
 
-const ResultsSection: React.FC<ResultsSectionProps> = ({ totalScore, maturity, showResults, sectionScores, userData }) => {
-    // Log for verification
-    if (showResults) {
-        console.log(`Generating results for ${userData.name} (${userData.email})`);
-    }
+const ResultsSection: React.FC<ResultsSectionProps> = ({ totalScore, maturity, showResults, sectionScores }) => {
     return (
         <>
             {/* Score + Maturity + Section Breakdown — conditional */}
