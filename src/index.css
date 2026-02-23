@@ -1891,6 +1891,14 @@ h3 {
   .how-features {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .benchmark-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .benchmark-item:nth-child(2) {
+    border-right: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -2013,6 +2021,37 @@ h3 {
   .impact-grid {
     grid-template-columns: 1fr;
   }
+
+  .benchmark-grid {
+    grid-template-columns: repeat(2, 1fr);
+    overflow: visible;
+  }
+
+  .benchmark-item {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .benchmark-item:nth-child(2) {
+    border-right: none;
+  }
+
+  .benchmark-item:nth-child(3),
+  .benchmark-item:nth-child(4) {
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+  }
+
+  .benchmark-text {
+    max-width: none;
+  }
+
+  .cta-strip {
+    padding: 2rem 1.25rem;
+    gap: 2rem;
+  }
+
+  .cta-title {
+    font-size: 1.4rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -2065,6 +2104,39 @@ h3 {
   .cta-btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .benchmark-grid {
+    grid-template-columns: 1fr;
+    overflow: visible;
+  }
+
+  .benchmark-item {
+    border-right: none;
+    padding: 1.25rem 1rem;
+  }
+
+  .benchmark-item:nth-child(n+2) {
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+  }
+
+  .benchmark-text {
+    max-width: none;
+    font-size: 0.85rem;
+  }
+
+  .cta-strip {
+    padding: 1.75rem 1rem;
+    gap: 1.5rem;
+    border-radius: 16px;
+  }
+
+  .cta-title {
+    font-size: 1.25rem;
+  }
+
+  .cta-subtitle {
+    font-size: 0.85rem;
   }
 
   .lead-capture-card {
@@ -2133,13 +2205,12 @@ h3 {
 
 .benchmark-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   width: 100%;
   max-width: 1000px;
   background: rgba(212, 175, 55, 0.03);
   border-radius: 16px;
   border: 1px solid rgba(212, 175, 55, 0.1);
-  overflow: hidden;
 }
 
 .benchmark-item {
