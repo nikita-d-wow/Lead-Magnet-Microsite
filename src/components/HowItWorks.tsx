@@ -4,8 +4,8 @@ import { CheckCircle, Layers, HelpCircle, SlidersHorizontal, Award } from 'lucid
 const STEPS = [
     { icon: <Layers size={28} />, title: <><span className="serif-number">5</span> Sections</>, text: 'Comprehensive evaluation categories' },
     { icon: <HelpCircle size={28} />, title: <><span className="serif-number">25</span> Questions</>, text: 'Targeted maturity data points' },
-    { icon: <SlidersHorizontal size={28} />, title: 'Self-scoring', text: 'Objective evaluation framework' },
-    { icon: <Award size={28} />, title: 'Instant Result', text: 'Maturity classification report' },
+    { icon: <SlidersHorizontal size={28} />, title: 'Self-scoring framework', text: 'Objective evaluation criteria' },
+    { icon: <Award size={28} />, title: 'Instant maturity classification', text: 'Maturity classification report' },
 ];
 
 const LEVELS = [
@@ -90,7 +90,7 @@ const HowItWorks = () => {
 
                     <p className="how-scoring-note">
                         <CheckCircle size={18} style={{ color: 'var(--accent-gold)' }} />
-                        Includes customized recommendations based on your specific score.
+                        Add up your scores at the end. Includes customized recommendations based on your specific score.
                     </p>
                 </motion.div>
             </div>

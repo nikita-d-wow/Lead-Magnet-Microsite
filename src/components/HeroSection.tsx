@@ -40,12 +40,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onStartAudit }) => {
                             display: 'inline-block'
                         }}
                     >
-                        Foundation for Developer Excellence
+                        The Real Estate Developer Digital Maturity Audit™
                     </p>
-                    <h1 style={{ fontSize: '2.8rem', lineHeight: 1.1, marginBottom: '1.25rem' }}>
-                        How Digitally Mature Is Your <br />
-                        <span className="gold-gradient-text">Real Estate Portfolio?</span>
+                    <h1 style={{ fontSize: '2.5rem', lineHeight: 1.1, marginBottom: '0.75rem' }}>
+                        The Real Estate Developer <br />
+                        <span className="gold-gradient-text">Digital Maturity Audit™</span>
                     </h1>
+                    <h2 style={{ fontSize: '1.5rem', fontWeight: 500, color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
+                        How Digitally Mature Is Your Real Estate Portfolio?
+                    </h2>
                     <p
                         style={{
                             fontSize: '1rem',
@@ -86,29 +89,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onStartAudit }) => {
                 </div>
             </motion.div>
 
-            {/* Scroll Indicator */}
-            <motion.div
-                className="scroll-indicator"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.8, duration: 1 }}
-                style={{ marginBottom: '1rem' }}
-            >
-                <div className="scroll-text">Scroll</div>
-                <div className="scroll-line-container">
-                    <motion.div
-                        className="scroll-line-active"
-                        animate={{
-                            top: ['-50%', '100%'],
-                        }}
-                        transition={{
-                            duration: 2.2,
-                            repeat: Infinity,
-                            ease: "linear"
-                        }}
-                    />
-                </div>
-            </motion.div>
         </section>
     );
 };

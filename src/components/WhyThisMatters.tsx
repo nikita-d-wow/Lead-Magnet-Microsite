@@ -22,10 +22,10 @@ const WhyThisMatters = () => {
                 >
                     <span className="why-eyebrow">The Business Case</span>
                     <h2 className="why-title">
-                        The Cost of <span className="gold-gradient-text">Digital Immature</span>
+                        The Cost of <span className="gold-gradient-text">Digital Immaturity</span>
                     </h2>
                     <p className="why-subtitle">
-                        In an era of rapid institutionalization, digital maturity isn't a luxury—it's the baseline for survival and growth.
+                        Most real estate developers believe they are “digitally enabled.” <br /> But behind the scenes:
                     </p>
                 </motion.div>
 
@@ -33,7 +33,7 @@ const WhyThisMatters = () => {
                     {REASONS.map((reason, index) => (
                         <motion.div
                             key={index}
-                            className="why-card"
+                            className="why-card" // Added back className="why-card"
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -54,7 +54,7 @@ const WhyThisMatters = () => {
                     transition={{ duration: 1, delay: 0.5 }}
                 >
                     <div className="why-closing-line" />
-                    <p>Understanding these risks is the first step toward institutional excellence.</p>
+                    <p>This audit reveals where your portfolio truly stands — across governance, execution, integration, and risk.</p>
                     <div className="why-closing-line" />
                 </motion.div>
             </div>

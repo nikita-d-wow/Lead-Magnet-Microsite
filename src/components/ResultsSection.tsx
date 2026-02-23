@@ -57,6 +57,9 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ totalScore, maturity, s
                                     <p className="maturity-score-subtitle">
                                         Validated Maturity Score
                                     </p>
+                                    <p className="maturity-score-hint" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.5rem' }}>
+                                        Maximum Potential Score: <span className="serif-number">125</span>
+                                    </p>
                                 </div>
 
                                 {/* Maturity Classification */}
