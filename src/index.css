@@ -552,8 +552,8 @@ h3 {
   display: flex;
   justify-content: center;
   gap: 3rem;
-  margin: 3rem 0;
-  padding: 1.5rem 0;
+  margin: 1.5rem 0 0;
+  padding: 1.5rem 0 0.5rem;
   position: relative;
 }
 
@@ -595,7 +595,7 @@ h3 {
    ════════════════════════════════════════════════ */
 
 .why-section {
-  padding: 3rem 0;
+  padding: 1.5rem 0 3rem;
 }
 
 .why-header {
@@ -880,12 +880,20 @@ h3 {
 
 .how-scoring-note {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 0.5rem;
   font-size: 0.9rem;
   color: var(--text-secondary);
   font-weight: 500;
+  text-align: left;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.how-scoring-note svg {
+  flex-shrink: 0;
+  margin-top: 3px;
 }
 
 

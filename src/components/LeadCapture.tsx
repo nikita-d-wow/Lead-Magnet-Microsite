@@ -85,13 +85,13 @@ const LeadCapture: React.FC<LeadCaptureProps> = ({ onCapture, isSubmitting }) =>
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="email">Work Email</label>
+                            <label htmlFor="email">Business Email</label>
                             <div className="input-wrapper">
                                 <Mail className="input-icon" size={18} />
                                 <input
                                     id="email"
                                     type="email"
-                                    placeholder="Enter your professional email"
+                                    placeholder="Enter your business email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className={errors.email ? 'input-error' : ''}
