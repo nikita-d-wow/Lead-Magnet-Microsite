@@ -138,7 +138,7 @@ export const classifications = [
       'Reliable governance',
       'Real-time reporting',
     ],
-    description: 'You are operating at private equity or REIT standard.',
+    description: 'A mature digital framework with high levels of integration and reliability. Real-time data informs strategic decisions, minimizing operational risk.',
     riskLevel: 'Low',
     leakage: 'Scalable Infrastructure',
     leakageLabel: 'Infrastructure Status',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ClipboardCheck, ShieldCheck } from 'lucide-react';
+import { ClipboardCheck } from 'lucide-react';
 import { Section } from '../auditData';
 import QuestionCard from './QuestionCard';
 
@@ -77,7 +77,9 @@ const AuditSection: React.FC<AuditSectionProps> = ({ section, scores, onScoreCha
                                 </div>
                             </div>
                             <div className="audit-score-display">
-                                <span className="audit-score-label"><ShieldCheck size={18} color="var(--accent-gold)" /> Section Score</span>
+                                <span className="audit-score-label" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <span style={{ fontSize: '1.2rem', color: 'var(--accent-gold)' }}>👉</span> Section Score
+                                </span>
                                 <span className="audit-score-value">
                                     <span className="serif-number">{sectionTotal}</span>
                                     <span className="audit-score-max">/ <span className="serif-number">{maxScore}</span></span>

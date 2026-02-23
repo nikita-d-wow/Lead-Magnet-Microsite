@@ -27,7 +27,7 @@ const ExecutiveReviewCTA: React.FC = () => {
                             { text: 'Executive score interpretation', icon: <Shield size={18} /> },
                             { text: 'Blind spot analysis', icon: <Target size={18} /> },
                             { text: 'Risk exposure mapping', icon: <BarChart3 size={18} /> },
-                            { text: '90-day stabilization roadmap', icon: <Map size={18} /> },
+                            { text: '90-day digital stabilization roadmap', icon: <Map size={18} /> },
                         ].map((item, i) => (
                             <div key={i} className="benchmark-item">
                                 <div className="benchmark-icon">{item.icon}</div>

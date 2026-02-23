@@ -9,7 +9,13 @@ interface QuestionCardProps {
     questionNumber: number;
 }
 
-const scoreLabels = ['Not in place', 'Ad hoc', 'Partial', 'Structured', 'Institutional'];
+const scoreLabels = [
+    'Not in place',
+    'Ad hoc',
+    'Partially structured',
+    'Fully structured',
+    'Institutional & automated'
+];
 
 const QuestionCard: React.FC<QuestionCardProps> = ({ question, score, onScoreChange, index, questionNumber }) => {
     return (
