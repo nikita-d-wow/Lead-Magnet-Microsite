@@ -21,7 +21,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, score, onScoreCha
             className={`question-item ${score > 0 ? 'question-item--answered' : ''}`}
         >
             <div className="question-header">
-                <span className="question-number">Q{questionNumber}</span>
+                <span className="question-number serif-number">Q{questionNumber}</span>
                 <p className="question-text">{question}</p>
             </div>
             <div className="score-options">
@@ -35,7 +35,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, score, onScoreCha
                         whileTap={{ scale: 0.92 }}
                         transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                     >
-                        <span className="score-btn-number">{s}</span>
+                        <span className="score-btn-number serif-number">{s}</span>
                     </motion.button>
                 ))}
             </div>
