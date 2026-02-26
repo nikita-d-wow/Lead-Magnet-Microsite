@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import logo from '../assets/WR-logo-1.svg';
+import logo from '../assets/WR logo (1).png';
 
 const Footer = () => {
     return (
@@ -22,6 +22,7 @@ const Footer = () => {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        textAlign: 'center'
                     }}
                 >
                     <motion.div
@@ -29,11 +30,16 @@ const Footer = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2, duration: 0.6 }}
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center'
+                        }}
                     >
                         <img
                             src={logo}
                             alt="WowRealty"
-                            style={{ height: '30px', opacity: 0.9, marginBottom: '1rem' }}
+                            style={{ height: '40px', opacity: 0.9, marginBottom: '1.5rem', width: 'auto' }}
                         />
                         <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
                             © 2026 WowLabz. All rights reserved.

@@ -40,11 +40,18 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onStartAudit }) => {
                             display: 'inline-block'
                         }}
                     >
-                        The Real Estate Developer Digital Maturity Audit™
+                        Free Digital Maturity Audit
                     </p>
-                    <h1 style={{ fontSize: '2.5rem', lineHeight: 1.1, marginBottom: '0.75rem' }}>
+                    <h1 style={{
+                        fontSize: '3.8rem',
+                        lineHeight: 1.05,
+                        marginBottom: '1rem',
+                        letterSpacing: '-0.02em',
+                        maxWidth: '900px',
+                        margin: '0 auto 1.5rem'
+                    }}>
                         The Real Estate Developer <br />
-                        <span className="gold-gradient-text">Digital Maturity Audit™</span>
+                        <span className="gold-gradient-text" style={{ whiteSpace: 'nowrap' }}>Digital Maturity Audit</span>
                     </h1>
                     <h2 style={{ fontSize: '1.5rem', fontWeight: 500, color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
                         How Digitally Mature Is Your Real Estate Portfolio?

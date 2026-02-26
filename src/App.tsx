@@ -20,7 +20,6 @@ function App() {
   const [showResults, setShowResults] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [isLeadCaptured, setIsLeadCaptured] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const resultsRef = useRef<HTMLDivElement>(null);
   const auditRef = useRef<HTMLDivElement>(null);
@@ -69,24 +68,24 @@ function App() {
   };
 
   const handleLeadCapture = async (name: string, email: string) => {
-    setIsSubmitting(true);
+    // Optimistically transition to audit
+    setIsLeadCaptured(true);
+
+    setTimeout(() => {
+      const auditElement = document.getElementById('audit-start');
+      if (auditElement) {
+        auditElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        auditRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+
+    // Call API in the background
     try {
       await captureLead(name, email);
-
-      setIsLeadCaptured(true);
-
-      setTimeout(() => {
-        const auditElement = document.getElementById('audit-start');
-        if (auditElement) {
-          auditElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          auditRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 100);
     } catch (error) {
-      alert('Failed to save your details. Please try again.');
-    } finally {
-      setIsSubmitting(false);
+      console.error('Background lead capture failed:', error);
+      // We don't alert the user here as they've already started the audit
     }
   };
 
@@ -115,7 +114,7 @@ function App() {
 
         {!isLeadCaptured && (
           <div ref={leadCaptureRef}>
-            <LeadCapture onCapture={handleLeadCapture} isSubmitting={isSubmitting} />
+            <LeadCapture onCapture={handleLeadCapture} />
           </div>
         )}
 
