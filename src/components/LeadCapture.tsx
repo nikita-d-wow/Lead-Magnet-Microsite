@@ -4,10 +4,9 @@ import { User, Mail, Shield, CheckCircle } from 'lucide-react';
 
 interface LeadCaptureProps {
     onCapture: (name: string, email: string) => void;
-    isSubmitting?: boolean;
 }
 
-const LeadCapture: React.FC<LeadCaptureProps> = ({ onCapture, isSubmitting }) => {
+const LeadCapture: React.FC<LeadCaptureProps> = ({ onCapture }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
@@ -41,7 +40,7 @@ const LeadCapture: React.FC<LeadCaptureProps> = ({ onCapture, isSubmitting }) =>
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (validate() && !isSubmitting) {
+        if (validate()) {
             onCapture(name, email);
         }
     };
@@ -78,7 +77,6 @@ const LeadCapture: React.FC<LeadCaptureProps> = ({ onCapture, isSubmitting }) =>
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     className={errors.name ? 'input-error' : ''}
-                                    disabled={isSubmitting}
                                 />
                             </div>
                             {errors.name && <span className="form-error-message">{errors.name}</span>}
@@ -95,7 +93,6 @@ const LeadCapture: React.FC<LeadCaptureProps> = ({ onCapture, isSubmitting }) =>
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className={errors.email ? 'input-error' : ''}
-                                    disabled={isSubmitting}
                                 />
                             </div>
                             {errors.email && <span className="form-error-message">{errors.email}</span>}
@@ -103,10 +100,9 @@ const LeadCapture: React.FC<LeadCaptureProps> = ({ onCapture, isSubmitting }) =>
 
                         <button
                             type="submit"
-                            disabled={isSubmitting}
-                            className={`btn-primary lead-capture-submit ${isSubmitting ? 'submitting' : ''}`}
+                            className="btn-primary lead-capture-submit"
                         >
-                            {isSubmitting ? 'Processing...' : 'Unlock Benchmark'}
+                            Unlock Benchmark
                         </button>
 
                         <div className="lead-capture-privacy">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import logo from '../assets/WR-logo-1.svg';
+import logo from '../assets/WR logo (1).png';
 import { Menu, X } from 'lucide-react';
 
 interface HeaderProps {
