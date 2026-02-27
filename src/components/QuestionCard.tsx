@@ -7,6 +7,7 @@ interface QuestionCardProps {
     onScoreChange: (score: number) => void;
     index: number;
     questionNumber: number;
+    isLocked?: boolean;
 }
 
 const scoreLabels = [
@@ -17,14 +18,14 @@ const scoreLabels = [
     'Institutional & automated'
 ];
 
-const QuestionCard: React.FC<QuestionCardProps> = ({ question, score, onScoreChange, index, questionNumber }) => {
+const QuestionCard: React.FC<QuestionCardProps> = ({ question, score, onScoreChange, index, questionNumber, isLocked = false }) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className={`question-item ${score > 0 ? 'question-item--answered' : ''}`}
+            className={`question-item ${score > 0 ? 'question-item--answered' : ''} ${isLocked ? 'question-item--locked' : ''}`}
         >
             <div className="question-header">
                 <span className="question-number serif-number">Q{questionNumber}</span>
@@ -35,11 +36,13 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, score, onScoreCha
                     <motion.button
                         key={s}
                         className={`score-btn ${score === s ? 'active' : ''}`}
-                        onClick={() => onScoreChange(s)}
-                        title={scoreLabels[s - 1]}
-                        whileHover={{ scale: 1.12 }}
-                        whileTap={{ scale: 0.92 }}
+                        onClick={() => !isLocked && onScoreChange(s)}
+                        title={isLocked ? 'Answers are locked after score generation' : scoreLabels[s - 1]}
+                        whileHover={isLocked ? {} : { scale: 1.12 }}
+                        whileTap={isLocked ? {} : { scale: 0.92 }}
                         transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                        disabled={isLocked}
+                        style={isLocked ? { cursor: 'not-allowed', opacity: score === s ? 1 : 0.35 } : {}}
                     >
                         <span className="score-btn-number serif-number">{s}</span>
                     </motion.button>

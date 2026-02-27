@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { auditData, classifications } from './auditData';
 import { Sparkles, AlertCircle } from 'lucide-react';
 import Header from './components/Header';
@@ -11,7 +11,7 @@ import LeadCapture from './components/LeadCapture';
 import Footer from './components/Footer';
 import ExecutiveReviewCTA from './components/ExecutiveReviewCTA';
 
-import { captureLead } from './services/api';
+import { captureLead, submitScore } from './services/api';
 
 const TOTAL_QUESTIONS = 25;
 
@@ -20,6 +20,9 @@ function App() {
   const [showResults, setShowResults] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [isLeadCaptured, setIsLeadCaptured] = useState(false);
+  const [isAuditLocked, setIsAuditLocked] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
 
   const resultsRef = useRef<HTMLDivElement>(null);
   const auditRef = useRef<HTMLDivElement>(null);
@@ -37,7 +40,9 @@ function App() {
   }, [scores]);
 
   const maturity = useMemo(() => {
-    return classifications.find(c => totalScore >= c.min && totalScore <= c.max) || classifications[0];
+    const matched = classifications.find(c => totalScore >= c.min && totalScore <= c.max) || classifications[0];
+    console.log(`Maturity Calculation: Score ${totalScore} -> ${matched.label}`);
+    return matched;
   }, [totalScore]);
 
   const sectionScores = useMemo(() => {
@@ -68,6 +73,10 @@ function App() {
   };
 
   const handleLeadCapture = async (name: string, email: string) => {
+    // Store user data in state for later use
+    setUserName(name);
+    setUserEmail(email);
+
     // Optimistically transition to audit
     setIsLeadCaptured(true);
 
@@ -89,16 +98,83 @@ function App() {
     }
   };
 
+  // Handle page exit/abandonment
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (isLeadCaptured && !showResults) {
+        // Prepare scores by section for abandonment
+        const scoresBySection: Record<string, number> = {};
+        sectionScores.forEach(s => {
+          scoresBySection[s.id] = s.score;
+        });
+
+        // Prepare data for abandonment
+        const data = {
+          name: userName,
+          businessEmail: userEmail,
+          totalScore: 0,
+          maturityLabel: 'Abandoned',
+          isAbandoned: true,
+          scores: scoresBySection,
+          classification: {
+            description: classifications[0].description,
+            bullets: classifications[0].bullets
+          }
+        };
+
+        // This will use keepalive: true in submitScore
+        submitScore(data).catch(() => { });
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [isLeadCaptured, showResults, userName, userEmail]);
+
   const allAnswered = answeredCount === TOTAL_QUESTIONS;
 
-  const handleGenerateScore = () => {
+  const handleGenerateScore = async () => {
     if (!allAnswered) {
       setShowWarning(true);
       auditRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
     }
     setShowWarning(false);
+    setIsAuditLocked(true);
+    console.log('Generating score for:', { userName, userEmail, totalScore });
     setShowResults(true);
+
+    // Prepare scores by section
+    const scoresBySection: Record<string, number> = {};
+    sectionScores.forEach(s => {
+      scoresBySection[s.id] = s.score;
+    });
+
+    // Call API in background
+    console.log('Sending score payload:', {
+      name: userName,
+      email: userEmail,
+      totalScore,
+      maturityLabel: maturity.label
+    });
+
+    submitScore({
+      name: userName,
+      businessEmail: userEmail,
+      totalScore,
+      maturityLabel: maturity.label,
+      scores: scoresBySection,
+      isAbandoned: false,
+      classification: {
+        description: maturity.description,
+        bullets: maturity.bullets
+      }
+    }).then(res => {
+      console.log('Score submission successful:', res);
+    }).catch(err => {
+      console.error('Failed to submit score results:', err);
+    });
+
     setTimeout(() => {
       resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
@@ -128,6 +204,7 @@ function App() {
                   section={section}
                   scores={scores}
                   onScoreChange={handleScoreChange}
+                  isLocked={isAuditLocked}
                 />
               ))}
             </div>
