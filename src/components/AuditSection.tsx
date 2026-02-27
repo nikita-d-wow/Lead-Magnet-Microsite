@@ -8,9 +8,10 @@ interface AuditSectionProps {
     section: Section;
     scores: Record<string, number>;
     onScoreChange: (questionId: string, score: number) => void;
+    isLocked?: boolean;
 }
 
-const AuditSection: React.FC<AuditSectionProps> = ({ section, scores, onScoreChange }) => {
+const AuditSection: React.FC<AuditSectionProps> = ({ section, scores, onScoreChange, isLocked = false }) => {
     const sectionTotal = section.questions.reduce((sum, q) => sum + (scores[q.id] || 0), 0);
     const maxScore = section.questions.length * 5;
     const progressPercent = (sectionTotal / maxScore) * 100;
@@ -57,6 +58,7 @@ const AuditSection: React.FC<AuditSectionProps> = ({ section, scores, onScoreCha
                                     questionNumber={idx + 1}
                                     score={scores[q.id] || 0}
                                     onScoreChange={(s) => onScoreChange(q.id, s)}
+                                    isLocked={isLocked}
                                 />
                             ))}
                         </div>
