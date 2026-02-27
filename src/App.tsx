@@ -23,6 +23,7 @@ function App() {
   const [isAuditLocked, setIsAuditLocked] = useState(false);
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const [isGeneratingScore, setIsGeneratingScore] = useState(false);
 
   const resultsRef = useRef<HTMLDivElement>(null);
   const auditRef = useRef<HTMLDivElement>(null);
@@ -139,6 +140,9 @@ function App() {
       auditRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
     }
+    
+    // Disable button and lock audit
+    setIsGeneratingScore(true);
     setShowWarning(false);
     setIsAuditLocked(true);
     console.log('Generating score for:', { userName, userEmail, totalScore });
@@ -173,6 +177,9 @@ function App() {
       console.log('Score submission successful:', res);
     }).catch(err => {
       console.error('Failed to submit score results:', err);
+    }).finally(() => {
+      // Keep button disabled even if there's an error
+      // setIsGeneratingScore(false); // Uncomment if you want to allow retry
     });
 
     setTimeout(() => {
@@ -211,9 +218,18 @@ function App() {
 
             {/* Generate Score Button */}
             <div className="generate-score-wrapper">
-              <button className="btn-primary generate-score-btn" onClick={handleGenerateScore}>
+              <button 
+                className="btn-primary generate-score-btn" 
+                onClick={handleGenerateScore}
+                disabled={isGeneratingScore}
+                style={{
+                  opacity: isGeneratingScore ? 0.6 : 1,
+                  cursor: isGeneratingScore ? 'not-allowed' : 'pointer',
+                  pointerEvents: isGeneratingScore ? 'none' : 'auto'
+                }}
+              >
                 <Sparkles size={22} />
-                Generate My Score
+                {isGeneratingScore ? 'Score Generated' : 'Generate My Score'}
               </button>
               {showWarning && (
                 <p className="generate-score-warning">
